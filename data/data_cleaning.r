@@ -64,6 +64,9 @@ data_filled$SkinThickness=data_st_filled
 data_filled$Insulin=data_ins_filled
 data_filled$BMI=data_bmi_filled
 
+# output filled data
+write.csv(data_filled, file = "./data/diabetes_filled.csv")
+
 # split data into train and test
 require(caTools)
 set.seed(516)
