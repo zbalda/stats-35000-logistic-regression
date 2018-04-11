@@ -100,3 +100,84 @@ pregnancy_count=as.data.frame.matrix(table(diabetes_data$Outcome, diabetes_data$
 plot = ggplot(pregnancy_count, aes(x=rating, fill=cond)) +
   geom_histogram(binwidth=.5, alpha=.5, position="identity")
 plot
+
+plot(diabetes_filled_data$Glucose, 
+     diabetes_filled_data$BloodPressure,
+     main="Linear Regression",
+     xlab="Glucose",
+     ylab="Blood Pressure")
+abline(lm(diabetes_filled_data$BloodPressure~diabetes_filled_data$Glucose), col="blue")
+
+require(reshape2)
+new_diabetes_filled_data = diabetes_filled_data
+new_diabetes_filled_data$X = NULL
+new_diabetes_filled_data$Insulin = NULL
+new_diabetes_filled_data$DiabetesPedigreeFunction = NULL
+new_diabetes_filled_data.m = melt(new_diabetes_filled_data, id.var="Outcome")
+require(ggplot2)
+ggplot(data=new_diabetes_filled_data.m, aes(x=variable, y=value)) + geom_boxplot(aes(fill=Outcome))
+
+
+# Overlaid histograms - Pregnancies
+table=table(diabetes_filled_data$BMI, diabetes_filled_data$Outcome)
+x1 = data.frame(table[,"0"])
+x2 = data.frame(table[,"1"])
+
+brs=11
+hist(x1$table....0..,
+     main="Histogram of Pregnancies",
+     xlab="Pregnancy Count",
+     breaks=brs,
+     col=rgb(0,0,1,0.5))
+
+hist(x2$table....1.., 
+     breaks=brs,
+     col=rgb(1,0,0,0.5), 
+     add=T)
+box()
+
+
+# barplot for Glucose
+barvar=table(diabetes_filled_data$Outcome, diabetes_filled_data$Glucose)
+barplot(barvar,
+        main="Bar Plot for Glucose",
+        xlab="Glucose",
+        ylab="Count",
+        border="black",
+        col=c("dodgerblue3","firebrick3"),
+        legend=c("No Diabetes", "Diabetes"),
+        las=1)
+
+# barplot for Blood Pressure
+barvar=table(diabetes_filled_data$Outcome, diabetes_filled_data$BloodPressure)
+barplot(barvar,
+        main="Bar Plot for Blood Pressure",
+        xlab="Blood Pressure",
+        ylab="Count",
+        border="black",
+        col=c("dodgerblue3","firebrick3"),
+        legend=c("No Diabetes", "Diabetes"),
+        las=1)
+
+
+# barplot for BMI
+barvar=table(diabetes_data$Outcome, diabetes_data$BMI)
+barplot(barvar,
+        main="Bar Plot for BMI",
+        xlab="BMI",
+        ylab="Count",
+        border="black",
+        col=c("dodgerblue3","firebrick3"),
+        legend=c("No Diabetes", "Diabetes"),
+        las=1)
+
+# barplot for Age
+barvar=table(diabetes_data$Outcome, diabetes_data$Age)
+barplot(barvar,
+        main="Bar Plot for Age",
+        xlab="Age",
+        ylab="Count",
+        border="black",
+        col=c("dodgerblue3","firebrick3"),
+        legend=c("No Diabetes", "Diabetes"),
+        las=1)
