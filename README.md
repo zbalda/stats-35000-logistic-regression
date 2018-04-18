@@ -15,7 +15,11 @@ An implementation and analysis of logistic regression
 * Give a 20-30 minute presentation to the class at the end of the semester
 
 #### Sources
+
 http://pingax.com/logistic-regression-r-step-step-implementation-part-2/
+
 http://www.cookbook-r.com/Graphs/Plotting_distributions_(ggplot2)/
+
 http://www.sthda.com/english/wiki/ggplot2-histogram-easy-histogram-graph-with-ggplot2-r-package
+
 https://stackoverflow.com/questions/3541713/how-to-plot-two-histograms-together-in-r
