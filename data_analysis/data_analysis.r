@@ -181,3 +181,15 @@ barplot(barvar,
         col=c("dodgerblue3","firebrick3"),
         legend=c("No Diabetes", "Diabetes"),
         las=1)
+
+require(ggplot2)
+
+diabetes = data.frame(bmi = rnorm(100000, 6, 2))
+no_diabetes = data.frame(bmi = rnorm(50000, 7, 2.5))
+
+diabetes$outcome = 'diabetes'
+no_diabetes$outcome = 'no_diabetes'
+
+outcome_bmi = rbind(diabetes, no_diabetes)
+
+ggplot(outcome_bmi, aes(bmi, fill = outcome)) + geom_density(alpha = 0.3)
