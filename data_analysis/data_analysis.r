@@ -6,7 +6,7 @@
 diabetes_data=read.csv("./data/diabetes.csv")
 diabetes_filled_data=read.csv("./data/diabetes_filled.csv")
 
-# Linear Regression Example
+### linear regression example
 pregnancy_count=as.data.frame.matrix(table(diabetes_data$Outcome, diabetes_data$Pregnancies))
 plot = ggplot(pregnancy_count, aes(x=rating, fill=cond)) +
   geom_histogram(binwidth=.5, alpha=.5, position="identity")
@@ -19,7 +19,7 @@ plot(diabetes_filled_data$Glucose,
      ylab="Blood Pressure")
 abline(lm(diabetes_filled_data$BloodPressure~diabetes_filled_data$Glucose), col="blue")
 
-# Multiple Box Plots
+### multiple box plots
 require(reshape2)
 new_diabetes_filled_data = diabetes_filled_data
 new_diabetes_filled_data$X = NULL
@@ -30,18 +30,28 @@ require(ggplot2)
 ggplot(data=new_diabetes_filled_data.m, aes(x=variable, y=value)) + geom_boxplot(aes(fill=Outcome))
 
 
-# Overlaid density plots with semi-transparent fill
+### overlaid density plots with semi-transparent fill
 require(ggplot2)
 
+# split data by outcome
 diabetes=data.frame(diabetes_data[diabetes_data$Outcome == 1,])
 no_diabetes=data.frame(diabetes_data[diabetes_data$Outcome == 0,])
 
-diabetes_feature=data.frame(feature = diabetes$BMI)
-no_diabetes_feature=data.frame(feature = no_diabetes$BMI)
+# get specific feature of split data
+diabetes_feature=data.frame(Age = diabetes$Age)
+no_diabetes_feature=data.frame(Age = no_diabetes$Age)
 
+# remove any 0s for Glucose, BloodPressure, SkinThickness, Insulin, and BMI
+diabetes_feature=data.frame(Age = diabetes_feature[diabetes_feature$Age != 0,])
+no_diabetes_feature=data.frame(Age = no_diabetes_feature[no_diabetes_feature$Age != 0,])
+
+# add outcome label
 diabetes_feature$Outcome = 'Diabetes'
 no_diabetes_feature$Outcome = 'No Diabetes'
 
+# combine split data
 outcome = rbind(diabetes_feature, no_diabetes_feature)
 
-ggplot(outcome, aes(feature, fill = Outcome)) + geom_density(alpha = 0.3)
+# graph with transparent density plot
+ggplot(outcome, 
+       aes(Age, fill = Outcome)) + geom_density(alpha = 0.3)
