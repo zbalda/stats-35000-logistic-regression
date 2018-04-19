@@ -137,59 +137,19 @@ hist(x2$table....1..,
 box()
 
 
-# barplot for Glucose
-barvar=table(diabetes_filled_data$Outcome, diabetes_filled_data$Glucose)
-barplot(barvar,
-        main="Bar Plot for Glucose",
-        xlab="Glucose",
-        ylab="Count",
-        border="black",
-        col=c("dodgerblue3","firebrick3"),
-        legend=c("No Diabetes", "Diabetes"),
-        las=1)
 
-# barplot for Blood Pressure
-barvar=table(diabetes_filled_data$Outcome, diabetes_filled_data$BloodPressure)
-barplot(barvar,
-        main="Bar Plot for Blood Pressure",
-        xlab="Blood Pressure",
-        ylab="Count",
-        border="black",
-        col=c("dodgerblue3","firebrick3"),
-        legend=c("No Diabetes", "Diabetes"),
-        las=1)
-
-
-# barplot for BMI
-barvar=table(diabetes_data$Outcome, diabetes_data$BMI)
-barplot(barvar,
-        main="Bar Plot for BMI",
-        xlab="BMI",
-        ylab="Count",
-        border="black",
-        col=c("dodgerblue3","firebrick3"),
-        legend=c("No Diabetes", "Diabetes"),
-        las=1)
-
-# barplot for Age
-barvar=table(diabetes_data$Outcome, diabetes_data$Age)
-barplot(barvar,
-        main="Bar Plot for Age",
-        xlab="Age",
-        ylab="Count",
-        border="black",
-        col=c("dodgerblue3","firebrick3"),
-        legend=c("No Diabetes", "Diabetes"),
-        las=1)
-
+# Overlaid density plots with semi-transparent fill
 require(ggplot2)
 
-diabetes = data.frame(bmi = rnorm(100000, 6, 2))
-no_diabetes = data.frame(bmi = rnorm(50000, 7, 2.5))
+diabetes=data.frame(diabetes_data[diabetes_data$Outcome == 1,])
+no_diabetes=data.frame(diabetes_data[diabetes_data$Outcome == 0,])
 
-diabetes$outcome = 'diabetes'
-no_diabetes$outcome = 'no_diabetes'
+diabetes_feature=data.frame(feature = diabetes$BMI)
+no_diabetes_feature=data.frame(feature = no_diabetes$BMI)
 
-outcome_bmi = rbind(diabetes, no_diabetes)
+diabetes_feature$Outcome = 'Diabetes'
+no_diabetes_feature$Outcome = 'No Diabetes'
 
-ggplot(outcome_bmi, aes(bmi, fill = outcome)) + geom_density(alpha = 0.3)
+outcome = rbind(diabetes_feature, no_diabetes_feature)
+
+ggplot(outcome, aes(feature, fill = Outcome)) + geom_density(alpha = 0.3)
