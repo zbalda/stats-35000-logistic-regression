@@ -33,14 +33,14 @@ quadratic_hyp = function(weights, data) {
 }
 
 # mean square error cost function
-mean_squared_cost = function(weights, data, hyp_funct) {
-  cost = (1/(2*nrow(data)))*sum((hyp_funct(weights, data) - Y)^2)
+mean_squared_cost = function(weights, data, outcome, hyp_funct) {
+  cost = (1/(2*nrow(data)))*sum((hyp_funct(weights, data) - outcome)^2)
   return(cost)
 }
 
 # logistic cost function
-logistic_cost = function(weights, data, hyp_funct) {
-  cost = (1/nrow(data))*sum((-Y)*log(hyp_funct(weights, data)) - (1-Y)*log(1-hyp_funct(weights, data)))
+logistic_cost = function(weights, data, outcome, hyp_funct) {
+  cost = (1/nrow(data))*sum((-outcome)*log(hyp_funct(weights, data)) - (1-outcome)*log(1-hyp_funct(weights, data)))
   return(cost)
 }
 
@@ -51,8 +51,9 @@ logistic_weights = as.matrix(rep(0,ncol(X)))
 learning_rate = 0.1
 epochs = 100
 
-mean_squared_cost(mean_squared_weights, X, linear_hyp)
-logistic_cost(logistic_weights, X, linear_hyp)
+# test cost functions
+mean_squared_cost(mean_squared_weights, X, Y, linear_hyp)
+logistic_cost(logistic_weights, X, Y, linear_hyp)
 
 # gradient descent
 gradient_descent = function() {
