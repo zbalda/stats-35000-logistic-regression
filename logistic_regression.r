@@ -24,12 +24,12 @@ sigmoid = function(x) {
 
 # linear hypothesis function
 linear_hyp = function(weights, data) {
-  return(sigmoid(weights%*%data))
+  return(sigmoid(as.matrix(data)%*%weights))
 }
 
 # quadratic hypothesis function
 quadratic_hyp = function(weights, data) {
-  return(sigmoid(weights%*%data))
+  return(sigmoid(as.matrix(data)%*%weights))
 }
 
 # mean square error cost function
@@ -46,11 +46,13 @@ logistic_cost = function(weights, data, hyp_funct) {
 
 
 # initialize vars for gradient descent
-weights = rep(0,ncol(X))
+mean_squared_weights = as.matrix(rep(0.00001,ncol(X)))
+logistic_weights = as.matrix(rep(0,ncol(X)))
 learning_rate = 0.1
 epochs = 100
 
-logistic_cost(weights, train_data, quadratic_hyp)
+mean_squared_cost(mean_squared_weights, X, linear_hyp)
+logistic_cost(logistic_weights, X, linear_hyp)
 
 # gradient descent
 gradient_descent = function() {
