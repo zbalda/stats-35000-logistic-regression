@@ -6,6 +6,7 @@
 diabetes_data=read.csv("./data/diabetes.csv")
 diabetes_filled_data=read.csv("./data/diabetes_filled.csv")
 
+
 ### linear regression example
 pregnancy_count=as.data.frame.matrix(table(diabetes_data$Outcome, diabetes_data$Pregnancies))
 plot = ggplot(pregnancy_count, aes(x=rating, fill=cond)) +
@@ -18,6 +19,16 @@ plot(diabetes_filled_data$Glucose,
      xlab="Glucose",
      ylab="Blood Pressure")
 abline(lm(diabetes_filled_data$BloodPressure~diabetes_filled_data$Glucose), col="blue")
+
+
+### logistic regression example
+no_zeros = diabetes_data[diabetes_data$BloodPressure != 0,]
+no_zeros = no_zeros[no_zeros$Glucose != 0,]
+plot(no_zeros$BloodPressure,no_zeros$Glucose,col=as.factor(no_zeros$Outcome),
+     xlab="Blood Pressure",
+     ylab="Glucose")
+legend(1, 1, legend=c("X","Y"), col=c("red","black"))
+
 
 ### multiple box plots
 require(reshape2)
