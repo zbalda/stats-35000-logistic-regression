@@ -70,6 +70,11 @@ accuracy = function(weights, data, outcome, hyp_funct){
 print(accuracy(optim_m$par, X_test, Y_test, linear_hyp))
 print(accuracy(optim_l$par, X_test, Y_test, linear_hyp))
 
+# train on all data
+X = rbind(X_train, X_test)
+Y = rbind(Y_train, Y_test)
 
+weights = as.matrix(rep(0,ncol(X)))
+optim = optim(par=weights, fn=logistic_cost, data=X, outcome=Y, hyp_funct=linear_hyp)
 
 
