@@ -6,16 +6,22 @@
 train_data=read.csv("./data/diabetes_filled_train.csv")
 test_data=read.csv("./data/diabetes_filled_test.csv")
 
-# remove extra column
+# remove extra columns
 train_data$X = NULL
 test_data$X = NULL
 
-# mean normalization?
+# split training data
+X_train = as.matrix(train_data[,1:8])
+X_train = cbind(X_train, 1)
+Y_train = as.matrix(train_data$Outcome)
 
-# split features and outcomes
-X = as.matrix(train_data[,1:8])
-X = cbind(X, 1)
-Y = as.matrix(train_data$Outcome)
+# split testing data
+X_test = as.matrix(test_data[,1:8])
+X_test = cbind(X_test, 1)
+Y_test = as.matrix(test_data$Outcome)
+
+# mean normalize?
+# scale(data, scale=FALSE)
 
 # sigmoid function
 sigmoid = function(x) {
@@ -44,24 +50,26 @@ logistic_cost = function(weights, data, outcome, hyp_funct) {
   return(cost)
 }
 
+# initialize weights
+mean_squared_weights = as.matrix(rep(0,ncol(X_train)))
+logistic_weights = as.matrix(rep(0,ncol(X_train)))
 
-# initialize vars for gradient descent
-mean_squared_weights = as.matrix(rep(0.00001,ncol(X)))
-logistic_weights = as.matrix(rep(0,ncol(X)))
-learning_rate = 0.1
-epochs = 100
+# optimize parameters
+optim_m = optim(par=mean_squared_weights, fn=mean_squared_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp)
+optim_l = optim(par=logistic_weights, fn=logistic_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp)
 
-# test cost functions
-mean_squared_cost(mean_squared_weights, X, Y, linear_hyp)
-logistic_cost(logistic_weights, X, Y, linear_hyp)
-
-# gradient descent
-gradient_descent = function() {
-  # gradient descent
-  #   take in alpha (learning rate)
-  #   take in weights and bias
-  #   compute gradient
-  #   update weights and bias 
+# accuracy function
+accuracy = function(weights, data, outcome, hyp_funct){
+  hyp = hyp_funct(weights, data)
+  diff = abs(hyp-outcome)
+  correct = subset(diff, diff[,1] <= 0.5)
+  return(nrow(correct)/nrow(data))
 }
 
-# get accuracy from test data
+# get accuracies
+print(accuracy(optim_m$par, X_test, Y_test, linear_hyp))
+print(accuracy(optim_l$par, X_test, Y_test, linear_hyp))
+
+
+
+
