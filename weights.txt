@@ -1,0 +1,10 @@
+              [,1]
+ [1,]  0.144711923  Pregnancies
+ [2,]  0.022856645  Glucose
+ [3,] -0.049268161  BloodPressure
+ [4,]  0.017021014  SkinThickness
+ [5,]  0.001533457  Insulin
+ [6,]  0.002428680  BMI
+ [7,]  0.910090639  DiabetesPedigreeFunction
+ [8,] -0.015611093  Age
+ [9,] -1.283591495  Bias
