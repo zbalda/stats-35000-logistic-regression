@@ -55,8 +55,11 @@ mean_squared_weights = as.matrix(rep(0,ncol(X_train)))
 logistic_weights = as.matrix(rep(0,ncol(X_train)))
 
 # optimize parameters
-optim_m = optim(par=mean_squared_weights, fn=mean_squared_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp)
-optim_l = optim(par=logistic_weights, fn=logistic_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp)
+optim_m = optim(par=mean_squared_weights, fn=mean_squared_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.6784314
+optim_l = optim(par=logistic_weights, fn=logistic_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.6745098
+
+optim_m = optim(par=mean_squared_weights, method="BFGS", fn=mean_squared_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.7686275
+optim_l = optim(par=logistic_weights, method="BFGS", fn=logistic_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.7882353
 
 # accuracy function
 accuracy = function(weights, data, outcome, hyp_funct){
@@ -75,6 +78,6 @@ X = rbind(X_train, X_test)
 Y = rbind(Y_train, Y_test)
 
 weights = as.matrix(rep(0,ncol(X)))
-optim = optim(par=weights, fn=logistic_cost, data=X, outcome=Y, hyp_funct=linear_hyp)
+optim = optim(par=weights, method="BFGS", fn=logistic_cost, data=X, outcome=Y, hyp_funct=linear_hyp)
 
 
