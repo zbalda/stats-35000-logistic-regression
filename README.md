@@ -3,8 +3,6 @@ An implementation and analysis of logistic regression
 
 * [Final Report](https://docs.google.com/document/d/1OpseD1n2D5J30dbsrEen-JA2_rlFZ2thCSQSdNpSRkY/edit?usp=sharing)
 
-* [Presentation Slides](https://docs.google.com/presentation/d/1U9j5Nmchp99d3JwePcdlGetrCxHAIjbTFJjF2DUR6Rg/edit?usp=sharing)
-
 ### Requirements
 * Learn and understand logistic regression
 * Provide a literature review of existing scientific results of this association studies
