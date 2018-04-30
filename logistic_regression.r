@@ -55,11 +55,17 @@ mean_squared_weights = as.matrix(rep(0,ncol(X_train)))
 logistic_weights = as.matrix(rep(0,ncol(X_train)))
 
 # optimize parameters
-optim_m = optim(par=mean_squared_weights, fn=mean_squared_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.6784314
-optim_l = optim(par=logistic_weights, fn=logistic_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.6745098
+# optim_m = optim(par=mean_squared_weights, fn=mean_squared_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.6784314
+# optim_l = optim(par=logistic_weights, fn=logistic_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.6745098
 
 optim_m = optim(par=mean_squared_weights, method="BFGS", fn=mean_squared_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.7686275
 optim_l = optim(par=logistic_weights, method="BFGS", fn=logistic_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.7882353
+
+# optim_m = optim(par=mean_squared_weights, method="CG", fn=mean_squared_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.6862745
+# optim_l = optim(par=logistic_weights, method="CG", fn=logistic_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.6980392
+
+# optim_m = optim(par=mean_squared_weights, method="L-BFGS-B", fn=mean_squared_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.7058824
+# optim_l = optim(par=logistic_weights, method="L-BFGS-B", fn=logistic_cost, data=X_train, outcome=Y_train, hyp_funct=linear_hyp) # 0.6745098
 
 # accuracy function
 accuracy = function(weights, data, outcome, hyp_funct){
@@ -70,14 +76,23 @@ accuracy = function(weights, data, outcome, hyp_funct){
 }
 
 # get accuracies
-print(accuracy(optim_m$par, X_test, Y_test, linear_hyp))
+print(accuracy(optim_m$par, X_test, Y_test, linear_hyp))Survived
 print(accuracy(optim_l$par, X_test, Y_test, linear_hyp))
 
 # train on all data
 X = rbind(X_train, X_test)
 Y = rbind(Y_train, Y_test)
-
 weights = as.matrix(rep(0,ncol(X)))
 optim = optim(par=weights, method="BFGS", fn=logistic_cost, data=X, outcome=Y, hyp_funct=linear_hyp)
+
+# fit data with glm for interpretation
+data = rbind(train_data, test_data)
+model <- glm(Outcome ~.,family=binomial(link='logit'),data=data)
+summary(model)
+anova(model, test="Chisq")
+
+# get accuracy of glm optimization
+model <- glm(Outcome ~.,family=binomial(link='logit'),data=train_data)
+
 
 
